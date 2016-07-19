@@ -1,0 +1,62 @@
+{
+  "name": "iei-invoice",
+  "version": "0.0.1-SNAPSHOT",
+  "description": "manually input invoice data",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "browserify -g uglifyify -e src/index.js -d | exorcist bundle.min.js.map > bundle.min.js",
+    "pretest": "npm install",
+    "posttest": "npm run build",
+    "test": "karma start karma.conf.js --singleRun",
+    "watch": "watchify src/index.js -d -o src/bundle.min.js -v",
+    "serve": "live-server --port=3000 src",
+    "start": "parallelshell \"npm run watch -s\" \"npm run serve -s\" \"karma start karma.conf.js\""
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "angular-mocks": "1.4.7",
+    "browserify": "^10.2.4",
+    "browserify-css": "^0.6.1",
+    "browserify-istanbul": "^0.2.1",
+    "browserify-ngannotate": "^1.0.1",
+    "exorcist": "^0.4.0",
+    "jasmine": "^2.3.1",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.12.37",
+    "karma-browserify": "^4.2.1",
+    "karma-cli": "^0.1.0",
+    "karma-coverage": "^0.4.2",
+    "karma-jasmine": "^0.3.6",
+    "karma-junit-reporter": "^0.3.8",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "live-server": "^0.8.1",
+    "parallelshell": "^1.2.0",
+    "phantomjs": "^1.9.17",
+    "stringify": "^3.1.0",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.3.1"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-ngannotate",
+      "browserify-css",
+      "stringify",
+      [
+        "uglifyify",
+        {
+          "ignore": [
+              "**/*.spec.js",
+              "**/test-setup.js"
+            ]
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "angular": "1.4.7"
+  },
+  "files": [
+    "src",
+    "bundle.min.*"
+  ]
+}
